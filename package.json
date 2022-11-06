@@ -1,0 +1,26 @@
+{
+  "name": "todo-list-sls-api",
+  "version": "1.0.0",
+  "description": "todo-list-sls-api",
+  "main": "src/handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sls",
+    "serverless",
+    "todo-list"
+  ],
+  "author": "feden2906",
+  "license": "ISC",
+  "dependencies": {
+    "@middy/core": "^3.6.2",
+    "@middy/http-json-body-parser": "^3.6.2",
+    "aws-sdk": "^2.1248.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^4.0.2",
+    "serverless-offline": "^11.2.0"
+  }
+}

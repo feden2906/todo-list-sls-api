@@ -1,0 +1,68 @@
+org: feden
+app: todo-list-sls-api
+service: todo-list-sls-api
+frameworkVersion: '3'
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  timeout: 16
+  versionFunctions: false
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:460778502103:table/Todos
+
+functions:
+  getTodos:
+    handler: src/get-todos.handler
+    events:
+      - httpApi:
+          path: /todos
+          method: get
+  createTodo:
+    handler: src/create-todo.handler
+    events:
+      - httpApi:
+          path: /todos
+          method: post
+
+  getTodo:
+    handler: src/get-todo.handler
+    events:
+      - httpApi:
+          path: /todos/{id}
+          method: get
+  updateTodo:
+    handler: src/update-todo.handler
+    events:
+      - httpApi:
+          path: /todos/{id}
+          method: put
+  removeTodo:
+    handler: src/remove-todo.handler
+    events:
+      - httpApi:
+          path: /todos/{id}
+          method: delete
+
+resources:
+  Resources:
+    Todos:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Todos
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
